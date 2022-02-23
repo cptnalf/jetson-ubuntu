@@ -1,5 +1,10 @@
 FROM ubuntu:20.04 as build
 
+# ref:
+# ref: https://github.com/mdegans/docker-tegra-ubuntu/blob/l4t-base/build_all.sh
+# https://github.com/balena-io-library/base-images/tree/master/balena-base-images/device-base
+# https://forums.balena.io/t/getting-linux-for-tegra-into-a-container-on-balena-os/179421/20
+
 # jetson nano, and tx1.
 # 194 = xavier
 # 186 = tx2
