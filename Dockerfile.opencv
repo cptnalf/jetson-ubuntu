@@ -1,0 +1,30 @@
+FROM cptnalf/ubuntu-l4t:focal-r32.7.1
+# https://github.com/timongentzsch/Jetson_Ubuntu20_Images
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG OPEN_CV_VERSION=4.5.0
+
+# 
+# overwrite with cuda opencv
+#
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      python3-pip python3-dev unzip libpango-1.0-0 && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean
+
+WORKDIR /tmp
+RUN --mount=target=/assets,type=bind,source=assets \
+    cp /assets/OpenCV-${OPEN_CV_VERSION}-aarch64-ubuntu20.zip . && \
+    unzip OpenCV-${OPEN_CV_VERSION}-aarch64-ubuntu20.zip && \
+    apt update && \
+    apt install -y --no-install-recommends -f ./*.deb && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf * \
+    apt-get clean
+
+#install missing numpy
+RUN pip3 install numpy
+
+WORKDIR /root
+CMD ["bash"]
